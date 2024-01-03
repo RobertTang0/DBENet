@@ -1,9 +1,7 @@
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import math
-# from nets.attention1 import *
 
 #  dense down block
 class Ddown(nn.Module):
@@ -93,8 +91,6 @@ class Sdown(nn.Module):
         x1 = self.conv(x)
         return self.pool(self.conv1_1(x + x1))
 
-
-
 # residual up block
 class Sup(nn.Module):
     def __init__(self, in_C):
@@ -109,8 +105,6 @@ class Sup(nn.Module):
     def forward(self, x):
         x1 = self.conv(x)
         return self.conv1_1(x + x1)
-
-
 
 
 #  cross-channel interaction component
@@ -135,6 +129,7 @@ class CCIC(nn.Module):
         y = self.sig(y).view([b, c, 1, 1])
 
         return y * x
+
 
 #  channel excitation component
 class CEC(nn.Module):
@@ -161,6 +156,7 @@ class CEC(nn.Module):
         y = y.view(b, c, 1, 1)  
 
         return y * X_input
+
 
 #  Ensemble Attention Module
 class EAM(nn.Module):
