@@ -163,15 +163,15 @@ class EAM(nn.Module):
     def __init__(self, in_channels) -> None:
         super().__init__()
 
-        self.se = CEC(in_channels)
-        self.eca = CCIC(in_channels)
+        self.cec = CEC(in_channels)
+        self.ccic = CCIC(in_channels)
 
         self.conv = conv1_1(in_channels)
         self.upsampling = nn.UpsamplingBilinear2d(scale_factor=2)
 
     def forward(self, x):
-        x1 = self.se(x)
-        x2 = self.eca(x)
+        x1 = self.cec(x)
+        x2 = self.ccic(x)
 
         x3 = x1 + x2
         x4 = self.conv(x * x3)
